@@ -14,6 +14,12 @@ else
 fi
 
 if command -v systemctl >/dev/null 2>&1; then
+  echo "[post-deploy] Ensuring systemd unit is installed..."
+  if [ ! -f /etc/systemd/system/pathmentor.service ]; then
+    sudo cp ops/pathmentor.service /etc/systemd/system/pathmentor.service
+    sudo systemctl daemon-reload
+    sudo systemctl enable pathmentor.service
+  fi
   echo "[post-deploy] Restarting pathmentor service..."
   sudo systemctl restart pathmentor.service
 else
