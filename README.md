@@ -2,11 +2,11 @@
 
 > Tu mentor de carrera en tech para latinoamericanos
 
-[![Demo](https://img.shields.io/badge/Demo-Live-38bdf8?style=for-the-badge)](http://157.254.174.228)
+[![Demo](https://img.shields.io/badge/Demo-Live-38bdf8?style=for-the-badge)](http://194.26.100.223)
 [![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Live-22c55e?style=for-the-badge)](https://Rodcolca.github.io/Pathmentor/)
 
 ## 🌎 Demo en vivo
-👉 **[http://157.254.174.228](http://157.254.174.228)**
+👉 **[http://194.26.100.223](http://194.26.100.223)**
 
 ## 💡 ¿Qué es PathMentor?
 
@@ -39,7 +39,7 @@ Puedes preguntarle sobre:
 El proyecto está desplegado en un servidor **gp.nano de CubePath** con:
 - Ubuntu 24.04
 - Nginx como servidor web
-- IP pública IPv4: `157.254.174.228`
+- IP pública IPv4: `194.26.100.223`
 
 CubePath permitió levantar el servidor en minutos con los $15 de crédito gratuito,
 sin necesidad de tarjeta de crédito.
@@ -92,7 +92,7 @@ desde cero, sin recursos, sin experiencia, pero con muchas ganas.
    sudo ufw allow OpenSSH && sudo ufw allow 80 && sudo ufw allow 443 && sudo ufw --force enable
    ```
 2. **Dominios y TLS** (usando las IPs del VPS):
-   - Copiá `ops/nginx.conf.sample` a `/etc/nginx/sites-available/pathmentor` (ya viene con `157.254.174.228` y `[2607:a2c0:800::c4]` como server_name/listen).
+   - Copiá `ops/nginx.conf.sample` a `/etc/nginx/sites-available/pathmentor` (ya viene con `194.26.100.223`; ajustalo si cambiás IP o usás dominio).
    - Hacé symlink a `sites-enabled` y probá config: `sudo nginx -t && sudo systemctl reload nginx`.
    - Opcional (si consigues dominio): `sudo certbot --nginx -d tu-dominio.com -d www.tu-dominio.com`. Si usás IP, Certbot no emitirá certificados públicos válidos; mantén HTTP/80 + HTTPS self-signed o agrega dominio cuando lo tengas.
    - Programa renovación (ya preparada para cron): `sudo crontab -e` y agrega `0 3 * * * /var/www/pathmentor/ops/certbot-renew.sh`.

@@ -1,35 +1,8 @@
-# HTTP -> HTTPS redirect and ACME challenge
+# HTTP-only config (no TLS). Update server_name to your IP or domain.
+
 server {
     listen 80;
-    server_name example.com www.example.com;
-
-    # Allow Certbot challenges
-    location /.well-known/acme-challenge/ {
-        root /var/www/html;
-    }
-
-    location / {
-        return 301 https://$host$request_uri;
-    }
-}
-
-server {
-    listen 443 ssl http2;
-    server_name example.com www.example.com;
-
-    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
-    ssl_trusted_certificate /etc/letsencrypt/live/example.com/chain.pem;
-
-    # Security headers
-    add_header X-Content-Type-Options nosniff;
-    add_header X-Frame-Options SAMEORIGIN;
-    add_header X-XSS-Protection "1; mode=block";
-    add_header Referrer-Policy strict-origin-when-cross-origin;
-
-    # Gzip static assets
-    gzip on;
-    gzip_types text/plain text/css application/javascript application/json application/xml+rss;
+    server_name 194.26.100.223;
 
     # Static frontend
     root /var/www/pathmentor;
