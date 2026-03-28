@@ -1,4 +1,5 @@
 import { Readable } from 'node:stream';
+import type { ReadableStream as WebReadableStream } from 'node:stream/web';
 import { Router } from 'express';
 import type { AppConfig } from '../config/env';
 import { HttpError } from '../errors/httpError';
@@ -37,7 +38,8 @@ export const createChatRouter = (config: AppConfig) => {
         throw new HttpError(502, 'Upstream response missing body');
       }
 
-      const stream = Readable.fromWeb(upstreamResponse.body);
+      const webStream = upstreamResponse.body as unknown as WebReadableStream<Uint8Array>;
+      const stream = Readable.fromWeb(webStream);
 
       for await (const chunk of stream) {
         res.write(chunk);
