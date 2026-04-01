@@ -5,8 +5,10 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=/var/www/pathmentor/server
-ExecStart=/usr/bin/node dist/server.js
+ExecStart=/usr/bin/env node dist/server.js
 Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
 Environment=NODE_ENV=production
 EnvironmentFile=/var/www/pathmentor/.env.local
 User=www-data

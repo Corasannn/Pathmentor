@@ -15,13 +15,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Build backend
-        run: |
-          cd server
-          npm ci
-          npm run build
-
-      - name: Prepare SSH (skip if secrets missing)
+      - name: Prepare SSH (requires secrets)
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
@@ -50,6 +44,7 @@ jobs:
             --exclude 'node_modules' \
             --exclude '.github' \
             --exclude '.env.local' \
+            --exclude 'server/dist' \
             ./ "$VPS_USER@$VPS_HOST:$VPS_PATH"
 
       - name: Post-deploy steps (install/build/restart)

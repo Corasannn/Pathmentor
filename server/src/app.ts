@@ -27,6 +27,7 @@ const createCorsConfig = (allowedOrigins: string[]): CorsOptions => {
 export const createApp = (config: AppConfig) => {
   const app = express();
 
+  app.set('trust proxy', 1);
   app.disable('x-powered-by');
   app.use(cors(createCorsConfig(config.allowedOrigins)));
   app.use(express.json({ limit: '1mb' }));

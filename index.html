@@ -192,25 +192,39 @@ Puedes preguntarme sobre carreras, salarios, cómo conseguir trabajo remoto, qu�
       sendMessage();
     }
 
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
     function appendUserMessage(text) {
       const chat = document.getElementById('chat');
-      chat.innerHTML += `
-        <div class="msg-user">
-          <span>${text}</span>
-        </div>`;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'msg-user';
+      const span = document.createElement('span');
+      span.textContent = text;
+      wrapper.appendChild(span);
+      chat.appendChild(wrapper);
       chat.scrollTop = chat.scrollHeight;
     }
 
     function appendBotMessage(initialText = '') {
       const chat = document.getElementById('chat');
       const id = `bot-${Date.now()}`;
-      chat.innerHTML += `
-        <div class="msg-bot" id="${id}">
-          <div class="nombre">🧭 PathMentor</div>
-          <span>${initialText}</span>
-        </div>`;
+      const wrapper = document.createElement('div');
+      wrapper.className = 'msg-bot';
+      wrapper.id = id;
+      const nombre = document.createElement('div');
+      nombre.className = 'nombre';
+      nombre.textContent = '🧭 PathMentor';
+      const span = document.createElement('span');
+      span.textContent = initialText;
+      wrapper.appendChild(nombre);
+      wrapper.appendChild(span);
+      chat.appendChild(wrapper);
       chat.scrollTop = chat.scrollHeight;
-      return document.getElementById(id).querySelector('span');
+      return wrapper.querySelector('span');
     }
 
     function updateBotSpan(span, text) {

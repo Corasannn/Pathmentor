@@ -45,6 +45,7 @@ export const streamCompletion = async (
     });
 
     if (!response.ok) {
+      await response.body?.cancel();
       throw mapStatus(response.status);
     }
 

@@ -48,6 +48,7 @@ export const createChatRouter = (config: AppConfig) => {
       res.end();
     } catch (error) {
       if (abortController.signal.aborted) {
+        if (!res.writableEnded) res.end();
         return;
       }
 
@@ -58,8 +59,14 @@ export const createChatRouter = (config: AppConfig) => {
       const message =
         error instanceof Error ? error.message : 'Internal Server Error';
 
-      res.write(`event: error\ndata: ${JSON.stringify({ message })}\n\n`);
-      res.end();
+      if (!res.writableEnded) {
+        try {
+          res.write(`event: error\ndata: ${JSON.stringify({ message })}\n\n`);
+          res.end();
+        } catch {
+          // Socket already destroyed — nothing to do
+        }
+      }
     }
   });
 
